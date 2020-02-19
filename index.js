@@ -12,6 +12,7 @@ server.use(express.json());
 server.use("/api/users", userRouter);
 
 
+
 server.get("/api",(req,res) => {
    res.status(200).json({msg:'App is up and running now.'});
 });
@@ -21,7 +22,8 @@ server.use((req,res) => {
    })
 });
 server.use((err,req,res,next) => {
-    res.status(500).json({
+     console.log(err);
+    res.status(500).json({       
        message: 'Something went wrong with the server'
     })
 });

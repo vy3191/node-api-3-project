@@ -1,6 +1,9 @@
 const express = require('express');
 const userDb = require('./userDb');
-const router = express.Router();
+const postRouter = require('../posts/postRouter');
+const router = express.Router({mergeParams:true});
+
+router.use("/:id/posts", postRouter);
 
 router.post('/',validateUser, async (req, res,next) => {
     try {
@@ -62,7 +65,6 @@ router.put('/:id',
             try {
               const newUserCount = await userDb.update(req.params.id, {name:req.name})
               if(newUserCount > 0) res.status(200).json(await userDb.getById(req.params.id));
-
             }catch(err) {
               next(err);
             }
