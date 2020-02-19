@@ -38,12 +38,17 @@ function validateUserId(req, res, next) {
             .then( user => {
                if(!user) res.status(404).json({ message: "invalid user id" });
                req.user = user;
+               next();
             })
             .catch(err => next(err));  
 }
 
 function validateUser(req, res, next) {
-  // do your magic!
+     const { name } = req.body;
+     if(!req.body) res.status(400).json({ message: "missing user data" });
+     if(!name) res.status(400).json({ message: "missing required name field" });
+     req.name = name;
+     next();
 }
 
 function validatePost(req, res, next) {
