@@ -30,9 +30,9 @@ router.get('/', (req, res,next) => {
     }
 });
 
-router.get('/:id', (req, res,next) => {
+router.get('/:id', validateUserId, (req, res,next) => {
     try {
-
+      res.status(200).json(req.user);
     }catch(err) {
       next(err);
     }
