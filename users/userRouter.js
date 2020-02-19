@@ -51,12 +51,16 @@ router.get('/:id',
             }
 });
 
-router.get('/:id/posts', (req, res,next) => {
-    try {
-
-    }catch(err) {
-      next(err);
-    }
+router.get('/:id/posts',
+             validateUserId, 
+            (req, res,next) => {
+            try {
+              const posts = userDb.getUserPosts(req.params.id);
+              console.log(posts);
+              res.status(200).json(posts);
+            }catch(err) {
+              next(err);
+            }
 });
 
 router.delete('/:id',
