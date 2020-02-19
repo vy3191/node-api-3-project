@@ -3,29 +3,33 @@ const postDb = require('./postDb');
 const router = express.Router({mergeParams:true});
 
 router.get('/', async (req, res, next) => {
-    try{
-      res.json(await postDb.get());
-    }catch(err) {
-      next(err);
-    }
+                try{
+                  res.json(await postDb.get());
+                }catch(err) {
+                  next(err);
+                }
 });
 
-router.get('/:postId', validatePostId, async (req, res, next) => {
-    try{            
-       res.status(200).json(req.post);
-    }catch(err) {
-      next(err);
-    }
+router.get('/:postId', 
+             validatePostId,
+             async (req, res, next) => {
+              try{            
+                res.status(200).json(req.post);
+              }catch(err) {
+                next(err);
+              }
 });
 
-router.delete('/:postId',validatePostId, async (req, res, next) => {
-    try{
-      const count = await postDb.remove(req.params.postId);
-      console.log('retrun from del',count);
-      if(count > 0) res.status(204).end();
-    }catch(err) {
-      next(err);
-    }
+router.delete('/:postId',
+                 validatePostId,
+                 async (req, res, next) => {
+                try{
+                  const count = await postDb.remove(req.params.postId);
+                  console.log('retrun from del',count);
+                  if(count > 0) res.status(204).end();
+                }catch(err) {
+                  next(err);
+                }
 });
 
 router.put('/:postId',
