@@ -46,20 +46,26 @@ router.get('/:id/posts', (req, res,next) => {
     }
 });
 
-router.delete('/:id', (req, res,next) => {
+router.delete('/:id',validateUserId, async (req, res,next) => {
     try {
-
+      const count = await userDb.remove(req.params.id);
+      if(count > 0) res.status(204).end();
     }catch(err) {
       next(err);
     }
 });
 
-router.put('/:id', (req, res,next) => {
-    try {
+router.put('/:id',
+            validateUserId,
+            validateUser,
+            async (req, res,next) => {
+            try {
+              const newUserCount = await userDb.update(req.params.id, {name:req.name})
+              if(newUserCount > 0) res.status(200).json(await userDb.getById(req.params.id));
 
-    }catch(err) {
-      next(err);
-    }
+            }catch(err) {
+              next(err);
+            }
 });
 
 //custom middleware
