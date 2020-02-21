@@ -3,6 +3,7 @@ const express = require('express');
 const helmet = require('helmet');
 const morgan = require('morgan');
 const userRouter = require("./users/userRouter");
+const postRouter = require("./posts/postRouter");
 const server = express();
 const PORT = 8500;
 
@@ -10,6 +11,7 @@ server.use(helmet());
 server.use(morgan('tiny'));
 server.use(express.json());
 server.use("/api/users", userRouter);
+server.use("/api/posts", postRouter);
 
 
 

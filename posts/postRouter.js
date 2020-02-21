@@ -10,6 +10,7 @@ router.get('/', async (req, res, next) => {
                 }
 });
 
+
 router.get('/:postId', 
              validatePostId,
              async (req, res, next) => {

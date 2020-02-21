@@ -4,7 +4,7 @@ const postDb = require("../posts/postDb");
 const postRouter = require('../posts/postRouter');
 const router = express.Router({mergeParams:true});
 
-router.use("/:id/posts", postRouter);
+// router.use("/:id/posts", postRouter);
 
 router.post('/',validateUser, async (req, res,next) => {
     try {
@@ -53,10 +53,10 @@ router.get('/:id',
 
 router.get('/:id/posts',
              validateUserId, 
-            (req, res,next) => {
+            async (req, res,next) => {
             try {
-              const posts = userDb.getUserPosts(req.params.id);
-              console.log(posts);
+              const posts = await userDb.getUserPosts(req.params.id);
+              console.log('line59 posts', posts);
               res.status(200).json(posts);
             }catch(err) {
               next(err);
